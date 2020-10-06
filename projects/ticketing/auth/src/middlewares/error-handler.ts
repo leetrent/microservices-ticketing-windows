@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import { DatabaseConnectionError } from '../errors/database-connection-error';
-import { RequestValidationError } from '../errors/request-validation-error';
+import { CustomError } from '../errors/custom-error';
 
 export const errorHandler = (
     err: Error, 
@@ -9,13 +8,9 @@ export const errorHandler = (
     next : NextFunction
 ) => {
 
-    if ( err instanceof RequestValidationError ) {
+    if ( err instanceof CustomError ) {
         return response.status(err.statusCode).send({ errors: err.serializeErrors() });
-    }   
-    
-    if ( err instanceof DatabaseConnectionError ) {
-        return response.status(err.statusCode).send({ errors: err.serializeErrors() });
-    }     
+    }      
     
     response.status(400).send({
         errors: [ { message: 'Unexpected server-side error encountered.'} ]
