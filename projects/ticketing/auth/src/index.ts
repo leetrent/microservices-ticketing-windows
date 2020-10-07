@@ -1,6 +1,7 @@
 import express  from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
+import mongoose from 'mongoose';
 import { currentUserRouter } from './routes/current-user'; 
 import { signInRouter  } from './routes/signin';
 import { signOutRouter } from './routes/signout';
@@ -22,6 +23,19 @@ app.all('*', async () => {
 
 app.use(errorHandler);
 
-app.listen(3000, () => {
-    console.log('[ticketing.windows][ticketing][auth][index.ts] => Listening on port 3000 ...');
-})
+const start = async() => {
+    try {
+        await mongoose.connect('mongodb://auth-mongo-srv:27017/auth', {
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+            useCreateIndex: true
+        });
+        console.log('[ticketing.windows][ticketing][auth][index.ts] => Successfully connectedto Mongo DB.');
+    } catch(errObj) {
+        console.error(errObj);
+    }
+    app.listen(3000, () => {
+        console.log('[ticketing.windows][ticketing][auth][index.ts] => Listening on port 3000 ...');
+    });
+};
+start();
