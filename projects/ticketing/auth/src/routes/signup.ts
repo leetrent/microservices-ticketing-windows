@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import { body, validationResult } from 'express-validator'; 
 import { User } from '../models/user';
 import { RequestValidationError } from '../errors/request-validation-error';
+import { BadRequestError } from '../errors/bad-request-error'
 
 const router = express.Router();
 
@@ -17,8 +18,7 @@ async (request: Request, response: Response ) => {
     const { email, password} = request.body;
     const existingUser = await User.findOne({email});
     if (existingUser) {
-        console.log(`[signup.ts][HttpPost] => (email already in use): '${email}'.`)
-        return response.send({});
+        throw new BadRequestError(`'${email}' is alredy in use.`);
     }
     const user = User.build({email, password});
     await user.save();
