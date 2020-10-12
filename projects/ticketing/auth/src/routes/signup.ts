@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express';
-import { body, validationResult } from 'express-validator'; 
+import { body, validationResult } from 'express-validator';
+import jwt from 'jsonwebtoken'; 
 import { User } from '../models/user';
 import { RequestValidationError } from '../errors/request-validation-error';
 import { BadRequestError } from '../errors/bad-request-error'
@@ -22,6 +23,18 @@ async (request: Request, response: Response ) => {
     }
     const user = User.build({email, password});
     await user.save();
+
+    // Generate JWT in synchronous mode:
+    const userJwt = jwt.sign({
+        id: user.id,
+        email: user.email
+    }, 'temporary placeholder');
+
+    // Store JWT in HTTP Session:
+    request.session = {
+        jwt: userJwt
+    };
+
     response.status(201).send(user);
 });
 
