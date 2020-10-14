@@ -28,7 +28,7 @@ async (request: Request, response: Response ) => {
     const userJwt = jwt.sign({
         id: user.id,
         email: user.email
-    }, 'temporary placeholder');
+    }, process.env.JWT_KEY!);
 
     // Store JWT in HTTP Session:
     request.session = {
