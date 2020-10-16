@@ -23,7 +23,7 @@ app.use(
 );
 app.use(currentUserRouter);
 app.use(signInRouter);
-app.use(signOutRouter);
+//app.use(signOutRouter);
 app.use(signUpRouter);
 
 app.all('*', async () => {
