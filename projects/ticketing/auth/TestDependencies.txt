@@ -1,0 +1,9 @@
+npm install --save-dev @types/jest
+npm install --save-dev @types/supertest
+npm install --save-dev jest
+npm install --save-dev ts-jest
+npm install --save-dev supertest
+npm install --save-dev mongodb-memory-server
+
+npm run test
+
