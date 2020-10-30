@@ -1,0 +1,12 @@
+npm init -y
+
+npm install react
+npm install react-dom
+npm install next
+
+  "scripts": {
+    "dev": "next"
+  },
+
+  cd ticketing/client
+  npm run dev
