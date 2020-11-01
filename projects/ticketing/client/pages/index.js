@@ -1,3 +1,3 @@
 export default () => {
-  return <h1>Landing Page</h1>
+  return <h1 className="text-danger">Landing Page</h1>
 };
