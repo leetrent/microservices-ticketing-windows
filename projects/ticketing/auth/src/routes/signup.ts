@@ -16,7 +16,7 @@ async (request: Request, response: Response ) => {
     const { email, password} = request.body;
     const existingUser = await User.findOne({email});
     if (existingUser) {
-        throw new BadRequestError(`'${email}' is alredy in use.`);
+        throw new BadRequestError(`'${email}' is already in use.`);
     }
     const user = User.build({email, password});
     await user.save();
